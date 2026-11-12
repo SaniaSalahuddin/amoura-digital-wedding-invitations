@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mahnoor and Ahmed monogram">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#5a1327"/>
+      <stop offset="100%" stop-color="#2c0d17"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f9d9a1"/>
+      <stop offset="50%" stop-color="#d9a65f"/>
+      <stop offset="100%" stop-color="#b86f2a"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="32" cy="32" r="30" fill="url(#bg)"/>
+  <circle cx="32" cy="32" r="28" fill="none" stroke="url(#gold)" stroke-width="1.8" opacity="0.9"/>
+
+  <path d="M14 42V20.5h7.4l6.8 10.8 6.6-10.8h7.2V42h-5.5V29.8l-8.1 12.7h-1.5L19.5 29.8V42H14Z" fill="url(#gold)" opacity="0.95"/>
+  <path d="M24.6 18.4c1.7-4.7 7.1-7.1 12.1-5.5 2 0.7 3.9 2.8 4.1 5.6.2 2.7-1.1 5.5-3.7 6.5-2.6 1.1-5.4-0.1-6.3-2.7-1-2.7 0.4-5.5 3.8-6.8" fill="none" stroke="#f6d8a7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+  <path d="M13.5 19.2c2.7-4.4 8.7-6.7 13.3-4.9" fill="none" stroke="#f6d8a7" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+  <path d="M50.5 19.2c-2.7-4.4-8.7-6.7-13.3-4.9" fill="none" stroke="#f6d8a7" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
+
+  <text x="32" y="38.5" text-anchor="middle" font-size="12" font-family="Georgia, 'Times New Roman', serif" font-weight="700" letter-spacing="1" fill="#fdf2dc">M &amp; A</text>
+</svg>
