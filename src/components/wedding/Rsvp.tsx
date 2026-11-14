@@ -9,6 +9,11 @@ import { FloatingHearts } from "./Petals";
 import { Reveal } from "./Reveal";
 
 const EVENTS = ["Mehndi", "Nikah & Baraat", "Walima"];
+
+// EmailJS keys — replace these three with your own from emailjs.com
+const EMAILJS_SERVICE_ID = "service_z56dhm6";
+const EMAILJS_TEMPLATE_ID = "template_tggxe8e";
+const EMAILJS_PUBLIC_KEY = "Dl4W5zzAo3n6gnFZJ";
 const field =
   "w-full border-0 border-b border-border bg-transparent px-1 py-3 font-display text-xl text-foreground placeholder:text-muted-foreground/60 transition-colors focus:border-primary focus:outline-none";
 
@@ -17,14 +22,43 @@ export function Rsvp() {
   const [attending, setAttending] = useState<"yes" | "no">("yes");
   const [guests, setGuests] = useState(2);
   const [events, setEvents] = useState<string[]>(EVENTS);
+  const [message, setMessage] = useState("");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
 
   const toggle = (e: string) => setEvents((cur) => (cur.includes(e) ? cur.filter((x) => x !== e) : [...cur, e]));
 
-  const submit = (ev: FormEvent) => {
+  const submit = async (ev: FormEvent) => {
     ev.preventDefault();
-    if (!name.trim()) return;
-    setSent(true);
+    if (!name.trim() || sending) return;
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          service_id: EMAILJS_SERVICE_ID,
+          template_id: EMAILJS_TEMPLATE_ID,
+          user_id: EMAILJS_PUBLIC_KEY,
+          template_params: {
+            name: name.trim(),
+            attending: attending === "yes" ? "Yes" : "No",
+            guests: attending === "yes" ? String(guests) : "0",
+            events: attending === "yes" ? events.join(", ") || "None selected" : "—",
+            message: message.trim() || "—",
+          },
+        }),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      setSent(true);
+    } catch (err) {
+      console.error("RSVP send failed", err);
+      setError("Sorry, your RSVP couldn't be sent. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -129,13 +163,14 @@ export function Rsvp() {
 
                   <div>
                     <label htmlFor="rsvp-msg" className="text-[11px] uppercase tracking-[0.4em] text-muted-foreground">A note for the couple</label>
-                    <textarea id="rsvp-msg" rows={3} placeholder="Share your blessings…" className={cn(field, "resize-none")} />
+                    <textarea id="rsvp-msg" rows={3} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Share your blessings…" className={cn(field, "resize-none")} />
                   </div>
 
                   <div className="text-center">
-                    <Button type="submit" variant="romance" size="xl">
-                      Send with love <Heart className="fill-primary-foreground" />
+                    <Button type="submit" variant="romance" size="xl" disabled={sending}>
+                      {sending ? "Sending…" : <>Send with love <Heart className="fill-primary-foreground" /></>}
                     </Button>
+                    {error && <p role="alert" className="mt-4 font-display text-lg text-destructive">{error}</p>}
                   </div>
                 </motion.form>
               ) : (
