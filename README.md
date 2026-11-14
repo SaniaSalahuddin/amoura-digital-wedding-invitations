@@ -172,8 +172,8 @@ Add screenshots of your website here to showcase its design and features.
 ```markdown
 <img width="940" height="447" alt="image" src="https://github.com/user-attachments/assets/5acc1b83-ea91-4e1c-b335-5f9fca02729f" />
 ```
+Live Link : https://amoura-digital-wedding-invitations.vercel.app/
 
-You can create a `screenshots` folder in your repository and add your actual website screenshots.
 
 ## 👩‍💻 Author
 
